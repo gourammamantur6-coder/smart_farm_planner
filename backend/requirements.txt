@@ -1,0 +1,11 @@
+Flask
+requests
+mysql-connector-python
+python-dotenv
+pandas
+joblib
+huggingface_hub
+scikit-learn
+transformers
+torch
+pillow
