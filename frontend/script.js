@@ -1,154 +1,558 @@
-"use strict";
-/* ---------- i18n (Feature 3: local language) ---------- */
-const T={
-en:{app:"KrishiPlan",lang:"Language",user:"Sign in as",prob:"The problem",probtxt:"Farmers face unpredictable weather, crop diseases and poor soil. Guessing when to water wastes water and risks the crop.",users:"Built for farmers, farm workers, crop experts and suppliers.",
-farm:"My farm",name:"Farm name",soil:"Soil type",crop:"Crop",area:"Area (acres)",moist:"Soil moisture (%)",plan:"Make water plan",
-red:"Red loam",black:"Black clay",sand:"Sandy",ragi:"Ragi",paddy:"Paddy",maize:"Maize",
-plan7:"7-day water plan",litres:"Litres per acre",total:"Total for farm",skip:"Skip",alerts:"Risk alerts",none:"No major risks this week.",
-growth:"Crop growth (cm)",soilh:"Soil moisture trend (%)",yield:"Yield (tonnes/acre, last 5 seasons)",price:"Price trend (₹/quintal)",
-speak:"Read aloud",saved:"Farm saved on this device",expert:"Crop expert view: read-only",only:"You can only see your own farm.",
-fixname:"Enter a farm name (2–40 letters or numbers).",fixarea:"Area must be between 0.1 and 100 acres.",fixmoist:"Moisture must be 0 to 100.",
-online:"Online",offline:"Offline – showing saved data",disc:"Advice is a guide based on sample data. Check with your local agriculture officer before acting.",
-heat:"Heat above 38°C: water in early morning and evening.",rain:"Heavy rain expected: open drains to avoid waterlogging.",wind:"Strong wind: do not spray pesticides that day.",fung:"High humidity and warmth: check leaves for fungal disease.",
-dry:"Dry spell with low soil moisture: irrigate in the first two days.",day:"Day"},
-kn:{app:"ಕೃಷಿಪ್ಲಾನ್",lang:"ಭಾಷೆ",user:"ಬಳಕೆದಾರ",prob:"ಸಮಸ್ಯೆ",probtxt:"ಹವಾಮಾನ ಅನಿಶ್ಚಿತ, ಬೆಳೆ ರೋಗ ಮತ್ತು ಮಣ್ಣಿನ ಸಮಸ್ಯೆಗಳು ರೈತರಿಗೆ ಇವೆ. ಊಹೆಯಿಂದ ನೀರು ಹಾಕಿದರೆ ನೀರು ವ್ಯರ್ಥ, ಬೆಳೆಗೆ ಅಪಾಯ.",users:"ರೈತರು, ಕೃಷಿ ಕಾರ್ಮಿಕರು, ಬೆಳೆ ತಜ್ಞರು ಮತ್ತು ಪೂರೈಕೆದಾರರಿಗಾಗಿ.",
-farm:"ನನ್ನ ಜಮೀನು",name:"ಜಮೀನಿನ ಹೆಸರು",soil:"ಮಣ್ಣಿನ ಪ್ರಕಾರ",crop:"ಬೆಳೆ",area:"ವಿಸ್ತೀರ್ಣ (ಎಕರೆ)",moist:"ಮಣ್ಣಿನ ತೇವಾಂಶ (%)",plan:"ನೀರಿನ ಯೋಜನೆ ಮಾಡಿ",
-red:"ಕೆಂಪು ಮಣ್ಣು",black:"ಕಪ್ಪು ಮಣ್ಣು",sand:"ಮರಳು ಮಣ್ಣು",ragi:"ರಾಗಿ",paddy:"ಭತ್ತ",maize:"ಮೆಕ್ಕೆಜೋಳ",
-plan7:"7 ದಿನಗಳ ನೀರಿನ ಯೋಜನೆ",litres:"ಪ್ರತಿ ಎಕರೆಗೆ ಲೀಟರ್",total:"ಒಟ್ಟು ಜಮೀನಿಗೆ",skip:"ಬೇಡ",alerts:"ಅಪಾಯ ಎಚ್ಚರಿಕೆಗಳು",none:"ಈ ವಾರ ದೊಡ್ಡ ಅಪಾಯವಿಲ್ಲ.",
-growth:"ಬೆಳೆ ಬೆಳವಣಿಗೆ (ಸೆಂ.ಮೀ)",soilh:"ಮಣ್ಣಿನ ತೇವಾಂಶ ಪ್ರವೃತ್ತಿ (%)",yield:"ಇಳುವರಿ (ಟನ್/ಎಕರೆ, ಕಳೆದ 5 ಋತು)",price:"ಬೆಲೆ ಪ್ರವೃತ್ತಿ (₹/ಕ್ವಿಂಟಲ್)",
-speak:"ಓದಿ ಹೇಳಿ",saved:"ಜಮೀನು ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ",expert:"ಬೆಳೆ ತಜ್ಞರ ನೋಟ: ಓದಲು ಮಾತ್ರ",only:"ನಿಮ್ಮ ಜಮೀನು ಮಾತ್ರ ನೋಡಬಹುದು.",
-fixname:"ಜಮೀನಿನ ಹೆಸರು ನಮೂದಿಸಿ (2–40 ಅಕ್ಷರ/ಅಂಕೆ).",fixarea:"ವಿಸ್ತೀರ್ಣ 0.1 ರಿಂದ 100 ಎಕರೆ ಇರಬೇಕು.",fixmoist:"ತೇವಾಂಶ 0 ರಿಂದ 100 ಇರಬೇಕು.",
-online:"ಆನ್‌ಲೈನ್",offline:"ಆಫ್‌ಲೈನ್ – ಉಳಿಸಿದ ಮಾಹಿತಿ ತೋರಿಸಲಾಗುತ್ತಿದೆ",disc:"ಇದು ಮಾದರಿ ಮಾಹಿತಿ ಆಧಾರಿತ ಸಲಹೆ. ಕ್ರಮ ಕೈಗೊಳ್ಳುವ ಮುನ್ನ ಸ್ಥಳೀಯ ಕೃಷಿ ಅಧಿಕಾರಿಯನ್ನು ಕೇಳಿ.",
-heat:"38°C ಮೇಲೆ ಬಿಸಿ: ಬೆಳಗ್ಗೆ ಮತ್ತು ಸಂಜೆ ನೀರು ಹಾಕಿ.",rain:"ಭಾರಿ ಮಳೆ: ನೀರು ನಿಲ್ಲದಂತೆ ಚರಂಡಿ ತೆರೆಯಿರಿ.",wind:"ಜೋರು ಗಾಳಿ: ಆ ದಿನ ಕೀಟನಾಶಕ ಸಿಂಪಡಿಸಬೇಡಿ.",fung:"ಹೆಚ್ಚು ತೇವ ಮತ್ತು ಬಿಸಿ: ಎಲೆಗಳಲ್ಲಿ ಶಿಲೀಂಧ್ರ ರೋಗ ಪರೀಕ್ಷಿಸಿ.",
-dry:"ಒಣ ಹವೆ, ತೇವಾಂಶ ಕಡಿಮೆ: ಮೊದಲ ಎರಡು ದಿನ ನೀರು ಹಾಕಿ.",day:"ದಿನ"},
-hi:{app:"कृषिप्लान",lang:"भाषा",user:"उपयोगकर्ता",prob:"समस्या",probtxt:"किसानों को अनिश्चित मौसम, फसल रोग और कमज़ोर मिट्टी की दिक्कत होती है। अंदाज़े से सिंचाई करने पर पानी बर्बाद होता है और फसल जोखिम में रहती है।",users:"किसानों, खेत मज़दूरों, फसल विशेषज्ञों और आपूर्तिकर्ताओं के लिए।",
-farm:"मेरा खेत",name:"खेत का नाम",soil:"मिट्टी का प्रकार",crop:"फसल",area:"क्षेत्रफल (एकड़)",moist:"मिट्टी की नमी (%)",plan:"पानी की योजना बनाएं",
-red:"लाल दोमट",black:"काली चिकनी",sand:"रेतीली",ragi:"रागी",paddy:"धान",maize:"मक्का",
-plan7:"7 दिन की सिंचाई योजना",litres:"लीटर प्रति एकड़",total:"पूरे खेत के लिए",skip:"न करें",alerts:"जोखिम चेतावनी",none:"इस हफ़्ते कोई बड़ा जोखिम नहीं।",
-growth:"फसल वृद्धि (सेमी)",soilh:"मिट्टी की नमी का रुझान (%)",yield:"उपज (टन/एकड़, पिछले 5 सीज़न)",price:"भाव का रुझान (₹/क्विंटल)",
-speak:"पढ़कर सुनाएं",saved:"खेत इस डिवाइस पर सहेजा गया",expert:"फसल विशेषज्ञ दृश्य: केवल पढ़ने के लिए",only:"आप केवल अपना खेत देख सकते हैं।",
-fixname:"खेत का नाम लिखें (2–40 अक्षर/अंक)।",fixarea:"क्षेत्रफल 0.1 से 100 एकड़ के बीच हो।",fixmoist:"नमी 0 से 100 के बीच हो।",
-online:"ऑनलाइन",offline:"ऑफ़लाइन – सहेजा डेटा दिख रहा है",disc:"यह नमूना डेटा पर आधारित सलाह है। कदम उठाने से पहले स्थानीय कृषि अधिकारी से पूछें।",
-heat:"38°C से ऊपर गर्मी: सुबह और शाम सिंचाई करें।",rain:"भारी बारिश: जलभराव से बचने के लिए नालियां खोलें।",wind:"तेज़ हवा: उस दिन कीटनाशक का छिड़काव न करें।",fung:"अधिक नमी और गर्मी: पत्तियों में फफूंद रोग जांचें।",
-dry:"सूखा मौसम, कम नमी: पहले दो दिन सिंचाई करें।",day:"दिन"}};
-let L="en";const t=k=>T[L][k]||T.en[k]||k;
+/* SMART FARM PLANNER - ENGLISH AND KANNADA */
 
-/* ---------- Sample data (Feature 4: use sample data) ---------- */
-const USERS={ravi:{name:"Ravi (farmer)",role:"farmer",farm:"f1"},lakshmi:{name:"Lakshmi (farmer)",role:"farmer",farm:"f2"},dr:{name:"Dr. Shetty (crop expert)",role:"expert"}};
-const SAMPLE={f1:{name:"Ravi Ragi Plot",soil:"red",crop:"ragi",area:2.5,moist:42},f2:{name:"Lakshmi Paddy Field",soil:"black",crop:"paddy",area:1.2,moist:60}};
-const WEATHER=[ // 7-day sample forecast for Hassan: max °C, rain mm, wind km/h, humidity %
-{d:"Mon",tmax:31,rain:0,wind:12,hum:55},{d:"Tue",tmax:33,rain:0,wind:14,hum:50},{d:"Wed",tmax:39,rain:0,wind:18,hum:40},
-{d:"Thu",tmax:34,rain:6,wind:22,hum:78},{d:"Fri",tmax:28,rain:38,wind:34,hum:90},{d:"Sat",tmax:29,rain:12,wind:20,hum:88},{d:"Sun",tmax:32,rain:0,wind:10,hum:62}];
-const CROPMM={ragi:3.2,paddy:6,maize:4.5}, SOILF={red:1.0,black:0.8,sand:1.3};
-const TRACK={growth:[4,9,15,24,34,45,56],soil:[48,44,41,52,63,58,50],yield:[1.1,1.3,1.2,1.5,1.6],
- price:{ragi:[3150,3220,3180,3340,3390,3450],paddy:[2150,2183,2200,2190,2230,2275],maize:[2050,2090,2120,2100,2160,2200]}};
+const translations = {
+    en: {
+        home: "Home",
+        welcome: "Welcome to Smart Farm Planner",
+        description: "Smart Agriculture Assistant",
+        getStarted: "Get Started",
+        register: "Farmer Registration",
+        dashboard: "Dashboard",
+        soil: "Soil Analysis",
+        weather: "Weather Forecast",
+        irrigation: "Irrigation Planner",
+        cropHealth: "Crop Health Monitoring",
+        harvesting: "Harvesting Guidance",
+        progress: "Progress Tracking",
+        farmerName: "Farmer Name",
+        phone: "Phone Number",
+        address: "Address",
+        submit: "Submit",
+        analyze: "Analyze Soil",
+        crop: "Crop Name",
+        soilType: "Soil Type",
+        ph: "Soil pH",
+        moisture: "Soil Moisture",
+        nitrogen: "Nitrogen",
+        phosphorus: "Phosphorus",
+        potassium: "Potassium",
+        city: "Enter City",
+        searchWeather: "Get Weather",
+        rainfall: "Rainfall Probability",
+        temperature: "Temperature",
+        generate: "Generate Irrigation Plan",
+        leaf: "Leaf Condition",
+        symptoms: "Symptoms",
+        growthStage: "Growth Stage",
+        height: "Plant Height",
+        save: "Save Progress",
+        loading: "Loading...",
+        registrationSuccess: "Registration completed successfully!",
+        welcomeMessage: "Welcome to Smart Farm Planner!",
+        soilResult: "Soil Analysis Result",
+        irrigationResult: "Irrigation Recommendation",
+        cropResult: "Crop Health Report",
+        acidic: "Acidic soil",
+        alkaline: "Alkaline soil",
+        moderate: "Moderate moisture reading",
+        low: "Low moisture reading",
+        high: "High moisture reading",
+        noReport: "Not reported",
+        saved: "Progress Saved Successfully!",
+        weatherError: "Weather information unavailable",
+        forecast: "7-Day Weather Forecast",
+        clear: "Clear Sky",
+        cloudy: "Cloudy",
+        rain: "Rain",
+        wind: "Wind",
+        max: "Maximum",
+        min: "Minimum",
+        reason: "Reason",
+        recommendation: "Recommendation",
+        farmer: "Farmer",
+        soilResultNote: "These are preliminary readings. Consult a soil test report for crop-specific nutrient recommendations."
+    },
 
-/* ---------- State, storage (Feature 5 + offline bonus) ---------- */
-const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
-let me="ravi";const farms={f1:store.get("farm:f1")||SAMPLE.f1,f2:store.get("farm:f2")||SAMPLE.f2};
+    kn: {
+        home: "ಮುಖಪುಟ",
+        welcome: "ಸ್ಮಾರ್ಟ್ ಫಾರ್ಮ್ ಪ್ಲಾನರ್‌ಗೆ ಸ್ವಾಗತ",
+        description: "ಸ್ಮಾರ್ಟ್ ಕೃಷಿ ಸಹಾಯಕ",
+        getStarted: "ಪ್ರಾರಂಭಿಸಿ",
+        register: "ರೈತರ ನೋಂದಣಿ",
+        dashboard: "ಮುಖ್ಯ ಫಲಕ",
+        soil: "ಮಣ್ಣಿನ ವಿಶ್ಲೇಷಣೆ",
+        weather: "ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ",
+        irrigation: "ನೀರಾವರಿ ಯೋಜನೆ",
+        cropHealth: "ಬೆಳೆ ಆರೋಗ್ಯ ಮೇಲ್ವಿಚಾರಣೆ",
+        harvesting: "ಕೊಯ್ಲು ಮಾರ್ಗದರ್ಶನ",
+        progress: "ಬೆಳೆ ಪ್ರಗತಿ",
+        farmerName: "ರೈತರ ಹೆಸರು",
+        phone: "ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
+        address: "ವಿಳಾಸ",
+        submit: "ಸಲ್ಲಿಸಿ",
+        analyze: "ಮಣ್ಣನ್ನು ವಿಶ್ಲೇಷಿಸಿ",
+        crop: "ಬೆಳೆ ಹೆಸರು",
+        soilType: "ಮಣ್ಣಿನ ವಿಧ",
+        ph: "ಮಣ್ಣಿನ pH",
+        moisture: "ಮಣ್ಣಿನ ತೇವಾಂಶ",
+        nitrogen: "ಸಾರಜನಕ",
+        phosphorus: "ರಂಜಕ",
+        potassium: "ಪೊಟ್ಯಾಸಿಯಮ್",
+        city: "ನಗರದ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+        searchWeather: "ಹವಾಮಾನ ತಿಳಿಯಿರಿ",
+        rainfall: "ಮಳೆಯ ಸಾಧ್ಯತೆ",
+        temperature: "ತಾಪಮಾನ",
+        generate: "ನೀರಾವರಿ ಯೋಜನೆ ರಚಿಸಿ",
+        leaf: "ಎಲೆಯ ಸ್ಥಿತಿ",
+        symptoms: "ಲಕ್ಷಣಗಳು",
+        growthStage: "ಬೆಳವಣಿಗೆಯ ಹಂತ",
+        height: "ಸಸ್ಯದ ಎತ್ತರ",
+        save: "ಪ್ರಗತಿಯನ್ನು ಉಳಿಸಿ",
+        loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+        registrationSuccess: "ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿ ಪೂರ್ಣಗೊಂಡಿದೆ!",
+        welcomeMessage: "ಸ್ಮಾರ್ಟ್ ಫಾರ್ಮ್ ಪ್ಲಾನರ್‌ಗೆ ಸ್ವಾಗತ!",
+        soilResult: "ಮಣ್ಣಿನ ವಿಶ್ಲೇಷಣೆ ಫಲಿತಾಂಶ",
+        irrigationResult: "ನೀರಾವರಿ ಶಿಫಾರಸು",
+        cropResult: "ಬೆಳೆ ಆರೋಗ್ಯ ವರದಿ",
+        acidic: "ಆಮ್ಲೀಯ ಮಣ್ಣು",
+        alkaline: "ಕ್ಷಾರೀಯ ಮಣ್ಣು",
+        moderate: "ಮಧ್ಯಮ ತೇವಾಂಶ",
+        low: "ಕಡಿಮೆ ತೇವಾಂಶ",
+        high: "ಹೆಚ್ಚಿನ ತೇವಾಂಶ",
+        noReport: "ವರದಿ ಮಾಡಲಾಗಿಲ್ಲ",
+        saved: "ಪ್ರಗತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ!",
+        weatherError: "ಹವಾಮಾನ ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ",
+        forecast: "7 ದಿನಗಳ ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ",
+        clear: "ಸ್ವಚ್ಛ ಆಕಾಶ",
+        cloudy: "ಮೋಡ ಕವಿದ ವಾತಾವರಣ",
+        rain: "ಮಳೆ",
+        wind: "ಗಾಳಿ",
+        max: "ಗರಿಷ್ಠ",
+        min: "ಕನಿಷ್ಠ",
+        reason: "ಕಾರಣ",
+        recommendation: "ಶಿಫಾರಸು",
+        farmer: "ರೈತರು",
+        soilResultNote: "ಇವು ಪ್ರಾಥಮಿಕ ಅಳತೆಗಳಾಗಿವೆ. ಬೆಳೆಗಳಿಗೆ ಸೂಕ್ತವಾದ ಪೋಷಕಾಂಶಗಳ ಸಲಹೆಗಾಗಿ ಮಣ್ಣಿನ ಪರೀಕ್ಷಾ ವರದಿಯನ್ನು ಪರಿಶೀಲಿಸಿ."
+    }
+};
 
-/* ---------- Helpers ---------- */
-const $=id=>document.getElementById(id);
-function el(tag,attrs={},...kids){const n=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==="class")n.className=v;else if(k.startsWith("on"))n.addEventListener(k.slice(2),v);else n.setAttribute(k,v)}
- kids.flat().forEach(c=>n.append(c instanceof Node?c:document.createTextNode(c)));return n}
-function toast(m){const e=$("toast");e.textContent=m;e.classList.remove("hidden");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.add("hidden"),3000)}
-function spark(vals,color,bar){const w=300,h=90,p=8,mx=Math.max(...vals),mn=bar?0:Math.min(...vals),rg=(mx-mn)||1,s=(w-2*p)/(vals.length-1||1);
- const X=i=>p+i*s,Y=v=>h-p-((v-mn)/rg)*(h-2*p);let g="";
- if(bar){const bw=(w-2*p)/vals.length-8;g=vals.map((v,i)=>`<rect x="${p+i*((w-2*p)/vals.length)+4}" y="${Y(v)}" width="${bw}" height="${h-p-Y(v)}" fill="${color}" rx="3"/>`).join("")}
- else g=`<polyline fill="none" stroke="${color}" stroke-width="3" stroke-linejoin="round" points="${vals.map((v,i)=>X(i)+","+Y(v)).join(" ")}"/>`+vals.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" fill="${color}"/>`).join("");
- const d=document.createElement("div");d.innerHTML=`<svg class="spark" viewBox="0 0 ${w} ${h}" role="img" aria-label="${vals.join(", ")}">${g}</svg>`;return d.firstChild}
+/* LANGUAGE MANAGEMENT */
 
-/* ---------- Core planner (Feature 2) ---------- */
-function makePlan(f){
- let moist=f.moist;const base=CROPMM[f.crop]*SOILF[f.soil];const days=[],alerts=[];
- WEATHER.forEach((w,i)=>{
-  const heatBoost=w.tmax>36?1.25:1;const need=base*heatBoost;       // mm/day crop demand
-  const eff=w.rain*0.8;                                             // usable rain
-  let irrig=Math.max(0,need-eff);
-  if(moist>70||w.rain>=10)irrig=0;                                   // wet soil: skip
-  else if(moist<30)irrig*=1.3;                                       // dry soil: top up
-  moist=Math.min(100,Math.max(10,moist+(eff+irrig-need)*2));
-  days.push({d:w.d,mm:irrig,L:Math.round(irrig*4047)});              // 1 mm over 1 acre ≈ 4047 L
-  if(w.tmax>38)alerts.push({lv:"med",m:w.d+": "+t("heat")});
-  if(w.rain>30)alerts.push({lv:"hi",m:w.d+": "+t("rain")});
-  if(w.wind>30)alerts.push({lv:"med",m:w.d+": "+t("wind")});
-  if(w.hum>85&&w.tmax>=27)alerts.push({lv:"med",m:w.d+": "+t("fung")});
- });
- if(f.moist<30&&WEATHER[0].rain===0&&WEATHER[1].rain===0)alerts.unshift({lv:"hi",m:t("dry")});
- return{days,alerts};
+function getLanguage() {
+    return localStorage.getItem("farmLanguage") || "en";
 }
 
-/* ---------- Validation (Feature 4/6) ---------- */
-function validate(v){const e={};
- if(!/^[\p{L}\p{N} .'-]{2,40}$/u.test(v.name.trim()))e.name=t("fixname");
- const a=parseFloat(v.area);if(!(a>=0.1&&a<=100))e.area=t("fixarea");
- const m=parseFloat(v.moist);if(!(m>=0&&m<=100))e.moist=t("fixmoist");
- if(!SOILF[v.soil]||!CROPMM[v.crop])e.name=e.name||t("fixname");
- return e}
-
-/* ---------- Render ---------- */
-function render(){
- document.documentElement.lang=L;
- $("t_app").textContent=t("app");$("t_lang").textContent=t("lang");$("t_user").textContent=t("user");
- $("t_prob").textContent=t("prob");$("t_probtxt").textContent=t("probtxt");$("t_users").textContent=t("users");
- const net=$("net");net.textContent=navigator.onLine?t("online"):t("offline");net.className="badge "+(navigator.onLine?"on":"off");
- const sel=$("user");sel.innerHTML="";Object.entries(USERS).forEach(([k,u])=>sel.append(el("option",{value:k},u.name)));sel.value=me;
- const app=$("app");app.innerHTML="";
- const u=USERS[me];
- try{
-  if(u.role==="farmer"){app.append(farmView(u.farm,true))}
-  else{app.append(el("div",{class:"card",style:"grid-column:1/-1"},el("b",{},t("expert"))));Object.keys(farms).forEach(id=>app.append(farmView(id,false)))}
- }catch(err){app.append(el("div",{class:"alert hi",role:"alert"},"Something went wrong. Reload the page. Your saved farm is safe."));console.error(err)}
- app.append(el("p",{class:"muted",style:"grid-column:1/-1"},t("disc")));
+function translate(key) {
+    return translations[getLanguage()][key] || translations.en[key] || key;
 }
 
-function farmView(id,editable){
- const f=farms[id],box=el("div",{class:"grid",style:"grid-column:1/-1"});
- /* form (Feature 1 & 2 inputs) */
- const form=el("section",{class:"card","aria-labelledby":"h"+id});form.append(el("h2",{id:"h"+id},t("farm")+": "+f.name));
- const fields={};
- const mk=(key,lab,type,val,opts)=>{const inp=opts?el("select",{id:key+id},...opts.map(([v,l])=>{const o=el("option",{value:v},l);return o})):el("input",{id:key+id,type,value:val,inputmode:type==="number"?"decimal":"text",maxlength:key==="name"?40:8});
-  if(opts)inp.value=val;if(!editable)inp.disabled=true;fields[key]=inp;const er=el("div",{class:"err",id:"e"+key+id,"aria-live":"polite"});inp.setAttribute("aria-describedby","e"+key+id);form.append(el("label",{for:key+id},lab,inp,er))};
- mk("name",t("name"),"text",f.name);
- mk("soil",t("soil"),null,f.soil,[["red",t("red")],["black",t("black")],["sand",t("sand")]]);
- mk("crop",t("crop"),null,f.crop,[["ragi",t("ragi")],["paddy",t("paddy")],["maize",t("maize")]]);
- mk("area",t("area"),"number",f.area);mk("moist",t("moist"),"number",f.moist);
- if(editable)form.append(el("div",{class:"bar",style:"margin-top:12px"},el("button",{class:"go",type:"button",onclick:()=>{
-   const v={};for(const k in fields)v[k]=fields[k].value;const er=validate(v);
-   for(const k in fields)$("e"+k+id).textContent=er[k]||"";
-   if(Object.keys(er).length)return;
-   farms[id]={name:v.name.trim(),soil:v.soil,crop:v.crop,area:+v.area,moist:+v.moist};
-   if(store.set("farm:"+id,farms[id]))toast(t("saved"));render()}},t("plan"))));
- else form.append(el("p",{class:"muted"},t("only")));
- box.append(form);
+function changeLanguage() {
+    const selector = document.getElementById("languageSelect");
 
- /* water plan + alerts */
- const{days,alerts}=makePlan(f),totalL=days.reduce((s,d)=>s+d.L,0)*f.area,mx=Math.max(1,...days.map(d=>d.L));
- const plan=el("section",{class:"card"},el("h2",{},t("plan7")),
-  el("div",{class:"days"},...days.map((d,i)=>el("div",{class:"day"},el("b",{},d.d),el("span",{class:"muted"},WEATHER[i].tmax+"°C · "+WEATHER[i].rain+" mm"),
-   el("div",{class:"drop","aria-hidden":"true"},el("i",{style:"height:"+Math.round(d.L/mx*44)+"px"})),d.L?d.L.toLocaleString()+" L":t("skip")))),
-  el("p",{class:"muted"},t("litres")),
-  el("div",{class:"kpi"},t("total")+": "+Math.round(totalL).toLocaleString()+" L"));
- const al=el("div",{"aria-live":"polite"},el("h2",{style:"margin-top:14px"},t("alerts")));
- if(alerts.length)alerts.forEach(a=>al.append(el("div",{class:"alert "+a.lv,role:"alert"},a.m)));else al.append(el("div",{class:"alert ok"},t("none")));
- plan.append(al);
- plan.append(el("button",{type:"button",style:"margin-top:8px",onclick:()=>speak(t("plan7")+". "+t("total")+" "+Math.round(totalL)+" litres. "+(alerts.length?alerts.map(a=>a.m).join(". "):t("none")))},"🔊 "+t("speak")));
- box.append(plan);
+    if (!selector) return;
 
- /* progress (Feature 5) */
- const tr=el("section",{class:"card",style:"grid-column:1/-1"},el("div",{class:"grid"},
-  chart(t("growth"),TRACK.growth,"var(--leaf)"),chart(t("soilh"),TRACK.soil,"var(--water)"),
-  chart(t("yield"),TRACK.yield,"var(--sun)",true),chart(t("price"),TRACK.price[f.crop],"var(--bad)")));
- box.append(tr);return box}
+    localStorage.setItem("farmLanguage", selector.value);
 
-function chart(title,vals,color,bar){const d=el("div",{},el("h2",{},title));d.append(spark(vals,color,bar));d.append(el("div",{class:"muted"},vals[0]+" → "+vals[vals.length-1]));return d}
+    applyTranslations();
+}
 
-/* ---------- Voice (Feature 3) ---------- */
-function speak(txt){try{if(!("speechSynthesis" in window))throw 0;const u=new SpeechSynthesisUtterance(txt);u.lang={en:"en-IN",kn:"kn-IN",hi:"hi-IN"}[L];speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast("Voice is not available on this device.")}}
+function applyTranslations() {
 
-/* ---------- Events ---------- */
-$("lang").addEventListener("change",e=>{L=e.target.value;store.set("lang",L);render()});
-$("user").addEventListener("change",e=>{me=e.target.value;render()});
-addEventListener("online",render);addEventListener("offline",render);
-const sl=store.get("lang");if(T[sl]){L=sl;$("lang").value=sl}
-render();
+    const language = getLanguage();
+
+    document.documentElement.lang =
+        language === "kn" ? "kn" : "en";
+
+    document.querySelectorAll("[data-translate]").forEach(element => {
+        const key = element.dataset.translate;
+
+        if (translations[language][key]) {
+            element.textContent = translations[language][key];
+        }
+    });
+
+    document.querySelectorAll("[data-translate-placeholder]").forEach(element => {
+        const key = element.dataset.translatePlaceholder;
+
+        if (translations[language][key]) {
+            element.placeholder = translations[language][key];
+        }
+    });
+
+    const selector = document.getElementById("languageSelect");
+
+    if (selector) {
+        selector.value = language;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", applyTranslations);
+
+
+/* HOME */
+
+function getStarted() {
+    alert(translate("welcomeMessage"));
+    window.location.href = "register.html";
+}
+
+
+/* REGISTRATION */
+
+
+/* REGISTRATION */
+
+const farmerForm = document.getElementById("farmerForm");
+
+if (farmerForm) {
+    farmerForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const farmerName = document.getElementById("name").value.trim();
+        const mobile = document.getElementById("mobile").value.trim();
+        const village = document.getElementById("village").value.trim();
+
+        try {
+            const response = await fetch("http://127.0.0.1:5000/api/farmers", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: farmerName,
+                    phone: mobile,
+                    location: village
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || result.status !== "success") {
+                alert(result.message || "Registration failed. Please try again.");
+                return;
+            }
+
+            alert(result.message);
+            window.location.href = "dashboard.html";
+
+        } catch (error) {
+            console.error("Registration error:", error);
+            alert("Cannot connect to the backend. Please check whether the backend server is running.");
+        }
+    });
+}
+
+
+
+/* SOIL ANALYSIS */
+
+const soilForm = document.getElementById("soilForm");
+
+if (soilForm) {
+    soilForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const name = document.getElementById("farmerName").value;
+        const soil = document.getElementById("soilType").value;
+        const ph = Number(document.getElementById("ph").value);
+        const moisture = Number(document.getElementById("moisture").value);
+
+        const nitrogen = Number(document.getElementById("nitrogen").value);
+        const phosphorus = Number(document.getElementById("phosphorus").value);
+        const potassium = Number(document.getElementById("potassium").value);
+
+        let phResult;
+
+        if (ph < 5.5) {
+            phResult = getLanguage() === "kn" ? "ಆಮ್ಲೀಯ ಮಣ್ಣು" : "Acidic soil";
+        } else if (ph <= 7.5) {
+            phResult = getLanguage() === "kn"
+                ? "ಸಾಮಾನ್ಯ ಬೆಳೆ ಬೆಳೆಯುವ pH ವ್ಯಾಪ್ತಿಯಲ್ಲಿದೆ"
+                : "Within a common crop-growing pH range";
+        } else {
+            phResult = getLanguage() === "kn" ? "ಕ್ಷಾರೀಯ ಮಣ್ಣು" : "Alkaline soil";
+        }
+
+        let moistureResult;
+
+        if (moisture < 30) {
+            moistureResult = translate("low");
+        } else if (moisture <= 60) {
+            moistureResult = translate("moderate");
+        } else {
+            moistureResult = translate("high");
+        }
+
+        document.getElementById("soilResult").innerHTML = `
+            <h2>🌱 ${translate("soilResult")}</h2>
+            <p><b>${translate("farmer")}:</b> ${name}</p>
+            <p><b>${translate("soilType")}:</b> ${soil}</p>
+            <p><b>${translate("ph")}:</b> ${ph} - ${phResult}</p>
+            <p><b>${translate("moisture")}:</b> ${moisture}% - ${moistureResult}</p>
+            <p><b>${translate("nitrogen")}:</b> ${nitrogen} mg/kg</p>
+            <p><b>${translate("phosphorus")}:</b> ${phosphorus} mg/kg</p>
+            <p><b>${translate("potassium")}:</b> ${potassium} mg/kg</p>
+            <hr>
+            <p>${translate("soilResultNote")}</p>
+        `;
+    });
+}
+/* WEATHER FORECAST */
+
+const weatherForm = document.getElementById("weatherForm");
+
+if (weatherForm) {
+    weatherForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const city = document.getElementById("city").value.trim();
+        const result = document.getElementById("weatherResult");
+        const kn = getLanguage() === "kn";
+
+        result.textContent = kn ? "ಹವಾಮಾನ ಮಾಹಿತಿ ಲೋಡ್ ಆಗುತ್ತಿದೆ..." : "Loading weather information...";
+
+        try {
+            const geoURL = "https://geocoding-api.open-meteo.com/v1/search?name=" +
+                encodeURIComponent(city) + "&count=1&language=en&format=json";
+
+            const geoResponse = await fetch(geoURL);
+            const geoData = await geoResponse.json();
+
+            if (!geoData.results?.length) {
+                throw new Error(kn ? "ಸ್ಥಳ ಕಂಡುಬಂದಿಲ್ಲ" : "Location not found");
+            }
+
+            const place = geoData.results[0];
+
+            const weatherURL =
+                `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=auto&forecast_days=7`;
+
+            const response = await fetch(weatherURL);
+            const data = await response.json();
+            const daily = data.daily;
+
+            const conditions = {
+                0: kn ? "ಸ್ವಚ್ಛ ಆಕಾಶ ☀️" : "Clear Sky ☀️",
+                1: kn ? "ಮುಖ್ಯವಾಗಿ ಸ್ವಚ್ಛ 🌤" : "Mainly Clear 🌤",
+                2: kn ? "ಭಾಗಶಃ ಮೋಡ ⛅" : "Partly Cloudy ⛅",
+                3: kn ? "ಮೋಡ ಕವಿದ ವಾತಾವರಣ ☁️" : "Cloudy ☁️",
+                45: kn ? "ಮಂಜು 🌫" : "Fog 🌫",
+                48: kn ? "ಮಂಜು 🌫" : "Fog 🌫",
+                51: kn ? "ತುಂತುರು ಮಳೆ 🌦" : "Light Drizzle 🌦",
+                53: kn ? "ತುಂತುರು ಮಳೆ 🌦" : "Drizzle 🌦",
+                55: kn ? "ಭಾರೀ ತುಂತುರು ಮಳೆ 🌧" : "Heavy Drizzle 🌧",
+                61: kn ? "ಲಘು ಮಳೆ 🌧" : "Light Rain 🌧",
+                63: kn ? "ಮಳೆ 🌧" : "Rain 🌧",
+                65: kn ? "ಭಾರೀ ಮಳೆ 🌧" : "Heavy Rain 🌧",
+                80: kn ? "ಮಳೆಯ ತುಂತುರು 🌦" : "Rain Showers 🌦",
+                81: kn ? "ಮಳೆಯ ತುಂತುರು 🌧" : "Rain Showers 🌧",
+                82: kn ? "ಭಾರೀ ಮಳೆ 🌧" : "Heavy Showers 🌧",
+                95: kn ? "ಗುಡುಗು ಸಹಿತ ಮಳೆ ⛈" : "Thunderstorm ⛈"
+            };
+
+            let html = "";
+
+            for (let i = 0; i < daily.time.length; i++) {
+                const date = new Date(daily.time[i] + "T00:00:00");
+
+                const day = date.toLocaleDateString(
+                    kn ? "kn-IN" : "en-IN",
+                    { weekday: "short", day: "numeric", month: "short" }
+                );
+
+                html += `
+                    <div class="forecast-card">
+                        <h3>${day}</h3>
+                        <p>${conditions[daily.weather_code[i]] || translate("weatherError")}</p>
+                        <p>🌡 ${translate("max")}: ${daily.temperature_2m_max[i]}°C</p>
+                        <p>🌡 ${translate("min")}: ${daily.temperature_2m_min[i]}°C</p>
+                        <p>🌧 ${translate("rain")}: ${daily.precipitation_probability_max[i]}%</p>
+                        <p>💨 ${translate("wind")}: ${daily.wind_speed_10m_max[i]} km/h</p>
+                    </div>`;
+            }
+
+            result.innerHTML = `
+                <h2>📍 ${place.name}, ${place.country}</h2>
+                <h3>${translate("forecast")}</h3>
+                <div class="forecast-container">${html}</div>
+            `;
+
+        } catch (error) {
+            result.textContent = error.message;
+        }
+    });
+}
+
+
+/* SMART IRRIGATION */
+
+const irrigationForm = document.getElementById("irrigationForm");
+
+if (irrigationForm) {
+    irrigationForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const kn = getLanguage() === "kn";
+        const crop = document.getElementById("crop").value;
+        const soil = document.getElementById("irrigationSoil").value;
+        const moisture = Number(document.getElementById("irrigationMoisture").value);
+        const rainfall = Number(document.getElementById("rainfall").value);
+        const temperature = Number(document.getElementById("temperature").value);
+
+        let recommendation, reason;
+
+        if (rainfall >= 70) {
+            recommendation = kn ? "ನೀರಾವರಿಯನ್ನು ಮುಂದೂಡಿ. ಮಳೆಯ ನಂತರ ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ." : "Delay irrigation and reassess after rainfall.";
+            reason = kn ? "ಮಳೆಯ ಸಾಧ್ಯತೆ ಹೆಚ್ಚಾಗಿದೆ." : "High probability of rainfall.";
+        } else if (moisture < 30) {
+            recommendation = kn ? "ಬೆಳೆಯ ನೀರಿನ ಅಗತ್ಯವನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ನೀರಾವರಿಯನ್ನು ಪರಿಗಣಿಸಿ." : "Check crop water requirements and consider irrigation.";
+            reason = kn ? "ಮಣ್ಣಿನ ತೇವಾಂಶ ಕಡಿಮೆಯಾಗಿದೆ." : "Soil moisture is low.";
+        } else if (moisture <= 60) {
+            recommendation = kn ? "ಮಣ್ಣಿನ ತೇವಾಂಶವನ್ನು ನಿರಂತರವಾಗಿ ಗಮನಿಸಿ." : "Continue monitoring soil moisture.";
+            reason = kn ? "ಮಣ್ಣಿನ ತೇವಾಂಶ ಮಧ್ಯಮ ಮಟ್ಟದಲ್ಲಿದೆ." : "Soil moisture is moderate.";
+        } else {
+            recommendation = kn ? "ಸದ್ಯಕ್ಕೆ ಹೆಚ್ಚುವರಿ ನೀರು ಹಾಕಬೇಡಿ ಮತ್ತು ಮಣ್ಣನ್ನು ಗಮನಿಸಿ." : "Avoid additional watering for now and monitor the soil.";
+            reason = kn ? "ಮಣ್ಣಿನ ತೇವಾಂಶ ಹೆಚ್ಚಾಗಿದೆ." : "Soil moisture is relatively high.";
+        }
+
+        if (temperature >= 35) {
+            reason += kn ? " ಹೆಚ್ಚಿನ ತಾಪಮಾನದಿಂದ ನೀರಿನ ನಷ್ಟ ಹೆಚ್ಚಾಗಬಹುದು." : " High temperature may increase water loss.";
+        }
+
+        document.getElementById("irrigationResult").innerHTML = `
+            <h2>💧 ${translate("irrigationResult")}</h2>
+            <p><b>${translate("crop")}:</b> ${crop}</p>
+            <p><b>${translate("soilType")}:</b> ${soil}</p>
+            <p><b>${translate("moisture")}:</b> ${moisture}%</p>
+            <p><b>${translate("rainfall")}:</b> ${rainfall}%</p>
+            <p><b>${translate("temperature")}:</b> ${temperature}°C</p>
+            <hr>
+            <h3>🌱 ${translate("recommendation")}</h3>
+            <p>${recommendation}</p>
+            <p><b>${translate("reason")}:</b> ${reason}</p>
+            <small>${kn
+                ? "ಇದು ಪ್ರಾತ್ಯಕ್ಷಿಕೆಯ ಶಿಫಾರಸು ಮಾತ್ರ. ನಿಜವಾದ ಮಣ್ಣಿನ ಸ್ಥಿತಿ ಮತ್ತು ಸ್ಥಳೀಯ ಕೃಷಿ ಮಾರ್ಗದರ್ಶನವನ್ನು ಪರಿಶೀಲಿಸಿ."
+                : "Demonstration recommendation only. Confirm actual soil conditions and local agricultural guidance."}
+            </small>
+        `;
+    });
+}
+
+
+/* CROP HEALTH */
+
+const cropHealthForm = document.getElementById("cropHealthForm");
+
+if (cropHealthForm) {
+    cropHealthForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const kn = getLanguage() === "kn";
+        const farmer = document.getElementById("cropFarmer").value;
+        const crop = document.getElementById("cropName").value;
+        const stage = document.getElementById("growthStage").value;
+        const leaf = document.getElementById("leafCondition").value;
+        const symptoms = document.getElementById("symptoms").value;
+        const height = document.getElementById("cropHeight").value;
+
+        let status, advice;
+
+        if (leaf === "Green and Healthy" && !symptoms) {
+            status = kn ? "ಗೋಚರ ಎಚ್ಚರಿಕೆಯ ಲಕ್ಷಣಗಳಿಲ್ಲ" : "No visible warning reported";
+            advice = kn ? "ನಿಯಮಿತವಾಗಿ ಬೆಳೆಯನ್ನು ಗಮನಿಸಿ." : "Continue regular crop monitoring.";
+        } else if (leaf === "Yellow Leaves") {
+            status = kn ? "ಎಲೆಗಳು ಹಳದಿಯಾಗಿವೆ" : "Yellowing symptoms reported";
+            advice = kn ? "ಮಣ್ಣಿನ ಪೋಷಕಾಂಶ, ನೀರು ಮತ್ತು ಒಳಚರಂಡಿಯನ್ನು ಪರಿಶೀಲಿಸಿ." : "Check soil nutrients, drainage and watering conditions.";
+        } else if (leaf === "Brown Spots") {
+            status = kn ? "ಎಲೆಗಳ ಮೇಲೆ ಕಲೆಗಳು ಕಂಡುಬಂದಿವೆ" : "Leaf spots reported";
+            advice = kn ? "ಪೀಡಿತ ಎಲೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಕೃಷಿ ತಜ್ಞರನ್ನು ಸಂಪರ್ಕಿಸಿ." : "Inspect affected leaves and seek agricultural expert advice.";
+        } else if (leaf === "Wilting") {
+            status = kn ? "ಬೆಳೆ ಬಾಡುತ್ತಿರುವ ಲಕ್ಷಣಗಳು ಕಂಡುಬಂದಿವೆ" : "Wilting symptoms reported";
+            advice = kn ? "ಮಣ್ಣಿನ ತೇವಾಂಶ ಮತ್ತು ಬೇರುಗಳ ಸ್ಥಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ." : "Check soil moisture and root condition.";
+        } else if (leaf === "Curled Leaves") {
+            status = kn ? "ಎಲೆಗಳು ಮುದುಡಿಕೊಂಡಿವೆ" : "Leaf curling reported";
+            advice = kn ? "ಕೀಟಗಳು, ಶಾಖ ಮತ್ತು ನೀರಿನ ಸಮಸ್ಯೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ." : "Inspect for pests, heat stress and water problems.";
+        } else {
+            status = kn ? "ಹೆಚ್ಚಿನ ಪರಿಶೀಲನೆ ಅಗತ್ಯ" : "Further inspection recommended";
+            advice = kn ? "ಬೆಳೆಯನ್ನು ಗಮನಿಸಿ ಮತ್ತು ಕೃಷಿ ತಜ್ಞರನ್ನು ಸಂಪರ್ಕಿಸಿ." : "Monitor the crop and consult an agricultural expert.";
+        }
+
+        document.getElementById("cropHealthResult").innerHTML = `
+            <h2>🌿 ${translate("cropResult")}</h2>
+            <p><b>${translate("farmer")}:</b> ${farmer}</p>
+            <p><b>${translate("crop")}:</b> ${crop}</p>
+            <p><b>${translate("growthStage")}:</b> ${stage}</p>
+            <p><b>${translate("leaf")}:</b> ${leaf}</p>
+            <p><b>${translate("height")}:</b> ${height} cm</p>
+            <p><b>${translate("symptoms")}:</b> ${symptoms || translate("noReport")}</p>
+            <hr>
+            <h3>${kn ? "ಆರೋಗ್ಯದ ಸ್ಥಿತಿ" : "Health Observation"}</h3>
+            <p>${status}</p>
+            <h3>${translate("recommendation")}</h3>
+            <p>${advice}</p>
+            <small>${kn
+                ? "ಇದು ರೈತರು ನಮೂದಿಸಿದ ಮಾಹಿತಿಯ ಆಧಾರದ ಮೇಲಿನ ಪ್ರಾಥಮಿಕ ವರದಿ ಮಾತ್ರ."
+                : "This is a preliminary observation based on farmer-entered information."}
+            </small>
+        `;
+    });
+}
+
+
+/* HARVESTING */
+
+const harvestForm = document.getElementById("harvestForm");
+
+if (harvestForm) {
+    harvestForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const kn = getLanguage() === "kn";
+        const farmer = document.getElementById("farmerName").value;
+        const crop = document.getElementById("cropName").value;
+        const days = document.getElementById("days").value;
+        const stage = document.getElementById("stage").value;
+        const appearance = document.getElementById("appearance").value;
+
+        let message;
+
+        if (stage === "Maturity" && appearance === "Fully mature") {
+            message = kn
+                ? "ನಿಮ್ಮ ಬೆಳೆ ಕೊಯ್ಲಿಗೆ ಸಿದ್ಧವಾಗಿರಬಹುದು. ಕೊಯ್ಲು ಮಾಡುವ ಮೊದಲು ಸ್ಥಳೀಯ ಕೃಷಿ ಮಾರ್ಗದರ್ಶನವನ್ನು ಪರಿಶೀಲಿಸಿ."
+                : "Your crop may be ready for harvesting. Confirm maturity with local agricultural guidance.";
+        } else if (stage === "Maturity" || appearance === "Yellowing or drying") {
+            message = kn
+                ? "ನಿಮ್ಮ ಬೆಳೆ ಪಕ್ವತೆಯ ಹಂತವನ್ನು ತಲುಪುತ್ತಿರಬಹುದು. ಕೊಯ್ಲಿಗೆ ಮೊದಲು ಪರಿಶೀಲಿಸಿ."
+                : "Your crop may be approaching maturity. Inspect it before deciding to harvest.";
+        } else {
+            message = kn
+                ? "ನಿಮ್ಮ ಬೆಳೆಗೆ ಇನ್ನಷ್ಟು ಬೆಳವಣಿಗೆಯ ಸಮಯ ಬೇಕಾಗಬಹುದು."
+                : "Your crop may need more growing time. Continue monitoring.";
+        }
+
+        document.getElementById("harvestResult").textContent =
+            (kn ? "ರೈತರು: " : "Farmer: ") + farmer +
+            " | " + (kn ? "ಬೆಳೆ: " : "Crop: ") + crop +
+            " | " + (kn ? "ದಿನಗಳು: " : "Days: ") + days +
+            " | " + message;
+    });
+}
+
+
+/* PROGRESS TRACKING */
+
+const progressForm = document.getElementById("progressForm");
+
+if (progressForm) {
+    progressForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const kn = getLanguage() === "kn";
+        const crop = document.getElementById("progressCrop").value;
+        const date = document.getElementById("sowingDate").value;
+        const stage = document.getElementById("growthStage").value;
+        const height = document.getElementById("plantHeight").value;
+        const moisture = document.getElementById("progressMoisture").value;
+        const notes = document.getElementById("progressNotes").value;
+
+        document.getElementById("progressResult").textContent =
+            translate("saved") +
+            (kn ? " ಬೆಳೆ: " : " Crop: ") + crop +
+            (kn ? " | ಬಿತ್ತನೆ ದಿನಾಂಕ: " : " | Sowing Date: ") + date +
+            (kn ? " | ಬೆಳವಣಿಗೆಯ ಹಂತ: " : " | Growth Stage: ") + stage +
+            (kn ? " | ಸಸ್ಯದ ಎತ್ತರ: " : " | Plant Height: ") + height + " cm" +
+            (kn ? " | ಮಣ್ಣಿನ ತೇವಾಂಶ: " : " | Soil Moisture: ") + moisture + "%" +
+            (kn ? " | ಟಿಪ್ಪಣಿಗಳು: " : " | Notes: ") + notes;
+    });
+}
