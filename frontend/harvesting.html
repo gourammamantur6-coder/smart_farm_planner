@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvesting Guidance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2>🌱 Smart Farm Planner</h2>
+
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="kn">ಕನ್ನಡ</option>
+        </select>
+    </header>
+
+    <section class="hero">
+
+        <h1 data-key="title">🌾 Harvesting Guidance</h1>
+
+        <p data-key="description">
+            Check whether your crop may be ready for harvesting.
+        </p>
+
+    </section>
+
+    <section class="features">
+
+        <form id="harvestForm">
+
+            <label data-key="farmer">Farmer Name:</label>
+            <input type="text" id="farmerName"
+                data-placeholder="farmerPlaceholder"
+                placeholder="Enter farmer name" required>
+
+            <br><br>
+
+            <label data-key="crop">Crop Name:</label>
+            <input type="text" id="cropName"
+                data-placeholder="cropPlaceholder"
+                placeholder="Enter crop name" required>
+
+            <br><br>
+
+            <label data-key="days">Days After Sowing:</label>
+            <input type="number" id="days" min="0"
+                data-placeholder="daysPlaceholder"
+                placeholder="Enter number of days" required>
+
+            <br><br>
+
+            <label data-key="stage">Growth Stage:</label>
+
+            <select id="stage" required>
+                <option value="" data-key="selectStage">Select Stage</option>
+                <option value="Seedling" data-key="seedling">Seedling</option>
+                <option value="Vegetative" data-key="vegetative">Vegetative</option>
+                <option value="Flowering" data-key="flowering">Flowering</option>
+                <option value="Fruiting" data-key="fruiting">Fruiting</option>
+                <option value="Maturity" data-key="maturity">Maturity</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="appearance">Crop Appearance:</label>
+
+            <select id="appearance" required>
+                <option value="" data-key="selectAppearance">Select Appearance</option>
+                <option value="Green and growing" data-key="green">Green and growing</option>
+                <option value="Yellowing or drying" data-key="yellow">Yellowing or drying</option>
+                <option value="Fully mature" data-key="mature">Fully mature</option>
+            </select>
+
+            <br><br>
+
+            <button type="submit" data-key="check">
+                Check Harvesting Status
+            </button>
+
+        </form>
+
+        <div id="harvestResult"></div>
+
+        <br>
+
+        <a href="dashboard.html" data-key="back">← Back to Dashboard</a>
+
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        const harvestTranslations = {
+            en: {
+                title: "🌾 Harvesting Guidance",
+                description: "Check whether your crop may be ready for harvesting.",
+                farmer: "Farmer Name:",
+                farmerPlaceholder: "Enter farmer name",
+                crop: "Crop Name:",
+                cropPlaceholder: "Enter crop name",
+                days: "Days After Sowing:",
+                daysPlaceholder: "Enter number of days",
+                stage: "Growth Stage:",
+                selectStage: "Select Stage",
+                seedling: "Seedling",
+                vegetative: "Vegetative",
+                flowering: "Flowering",
+                fruiting: "Fruiting",
+                maturity: "Maturity",
+                appearance: "Crop Appearance:",
+                selectAppearance: "Select Appearance",
+                green: "Green and growing",
+                yellow: "Yellowing or drying",
+                mature: "Fully mature",
+                check: "Check Harvesting Status",
+                back: "← Back to Dashboard"
+            },
+
+            kn: {
+                title: "🌾 ಕೊಯ್ಲು ಮಾರ್ಗದರ್ಶನ",
+                description: "ನಿಮ್ಮ ಬೆಳೆ ಕೊಯ್ಲಿಗೆ ಸಿದ್ಧವಾಗಿದೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸಿ.",
+                farmer: "ರೈತರ ಹೆಸರು:",
+                farmerPlaceholder: "ರೈತರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                crop: "ಬೆಳೆಯ ಹೆಸರು:",
+                cropPlaceholder: "ಬೆಳೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                days: "ಬಿತ್ತನೆಯ ನಂತರದ ದಿನಗಳು:",
+                daysPlaceholder: "ದಿನಗಳ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+                stage: "ಬೆಳವಣಿಗೆಯ ಹಂತ:",
+                selectStage: "ಹಂತವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                seedling: "ಸಸಿ ಹಂತ",
+                vegetative: "ಸಸ್ಯ ಬೆಳವಣಿಗೆಯ ಹಂತ",
+                flowering: "ಹೂ ಬಿಡುವ ಹಂತ",
+                fruiting: "ಹಣ್ಣು ಬಿಡುವ ಹಂತ",
+                maturity: "ಪಕ್ವತೆಯ ಹಂತ",
+                appearance: "ಬೆಳೆಯ ನೋಟ:",
+                selectAppearance: "ಬೆಳೆಯ ನೋಟವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                green: "ಹಸಿರಾಗಿ ಬೆಳೆಯುತ್ತಿದೆ",
+                yellow: "ಹಳದಿಯಾಗುತ್ತಿದೆ ಅಥವಾ ಒಣಗುತ್ತಿದೆ",
+                mature: "ಸಂಪೂರ್ಣವಾಗಿ ಪಕ್ವವಾಗಿದೆ",
+                check: "ಕೊಯ್ಲಿನ ಸ್ಥಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ",
+                back: "← ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹಿಂತಿರುಗಿ"
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById("languageSelect").value;
+
+            localStorage.setItem("farmLanguage", lang);
+
+            document.querySelectorAll("[data-key]").forEach(element => {
+                const key = element.getAttribute("data-key");
+                element.textContent = harvestTranslations[lang][key];
+            });
+
+            document.querySelectorAll("[data-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-placeholder");
+                element.placeholder = harvestTranslations[lang][key];
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+            const savedLanguage = localStorage.getItem("farmLanguage") || "en";
+            document.getElementById("languageSelect").value = savedLanguage;
+            changeLanguage();
+        });
+    </script>
+
+</body>
+</html>

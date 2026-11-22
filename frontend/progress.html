@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2>🌱 Smart Farm Planner</h2>
+
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="kn">ಕನ್ನಡ</option>
+        </select>
+    </header>
+
+    <section class="hero">
+
+        <h1 data-key="title">📊 Crop Progress Tracking</h1>
+
+        <p data-key="description">
+            Monitor your crop growth and farming progress.
+        </p>
+
+    </section>
+
+    <section class="features">
+
+        <form id="progressForm">
+
+            <label data-key="crop">Crop Name:</label>
+            <input type="text" id="progressCrop"
+                data-placeholder="cropPlaceholder"
+                placeholder="Enter crop name" required>
+
+            <br><br>
+
+            <label data-key="date">Sowing Date:</label>
+            <input type="date" id="sowingDate" required>
+
+            <br><br>
+
+            <label data-key="stage">Growth Stage:</label>
+
+            <select id="growthStage" required>
+                <option value="" data-key="selectStage">Select Stage</option>
+                <option value="Seedling" data-key="seedling">Seedling</option>
+                <option value="Vegetative" data-key="vegetative">Vegetative</option>
+                <option value="Flowering" data-key="flowering">Flowering</option>
+                <option value="Fruiting" data-key="fruiting">Fruiting</option>
+                <option value="Maturity" data-key="maturity">Maturity</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="height">Plant Height (cm):</label>
+            <input type="number" id="plantHeight"
+                min="0" required
+                data-placeholder="heightPlaceholder"
+                placeholder="Enter plant height">
+
+            <br><br>
+
+            <label data-key="moisture">Soil Moisture (%):</label>
+            <input type="number" id="progressMoisture"
+                min="0" max="100" required
+                data-placeholder="moisturePlaceholder"
+                placeholder="Enter soil moisture">
+
+            <br><br>
+
+            <label data-key="notes">Additional Notes:</label>
+            <textarea id="progressNotes"
+                data-placeholder="notesPlaceholder"
+                placeholder="Enter additional notes"></textarea>
+
+            <br><br>
+
+            <button type="submit" data-key="save">
+                Save Progress
+            </button>
+
+        </form>
+
+        <div id="progressResult"></div>
+
+        <br>
+
+        <a href="dashboard.html" data-key="back">
+            ← Back to Dashboard
+        </a>
+
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        const progressTranslations = {
+
+            en: {
+                title: "📊 Crop Progress Tracking",
+                description: "Monitor your crop growth and farming progress.",
+                crop: "Crop Name:",
+                cropPlaceholder: "Enter crop name",
+                date: "Sowing Date:",
+                stage: "Growth Stage:",
+                selectStage: "Select Stage",
+                seedling: "Seedling",
+                vegetative: "Vegetative",
+                flowering: "Flowering",
+                fruiting: "Fruiting",
+                maturity: "Maturity",
+                height: "Plant Height (cm):",
+                heightPlaceholder: "Enter plant height",
+                moisture: "Soil Moisture (%):",
+                moisturePlaceholder: "Enter soil moisture",
+                notes: "Additional Notes:",
+                notesPlaceholder: "Enter additional notes",
+                save: "Save Progress",
+                back: "← Back to Dashboard"
+            },
+
+            kn: {
+                title: "📊 ಬೆಳೆ ಪ್ರಗತಿ ಮೇಲ್ವಿಚಾರಣೆ",
+                description: "ನಿಮ್ಮ ಬೆಳೆಯ ಬೆಳವಣಿಗೆ ಮತ್ತು ಕೃಷಿ ಪ್ರಗತಿಯನ್ನು ಗಮನಿಸಿ.",
+                crop: "ಬೆಳೆಯ ಹೆಸರು:",
+                cropPlaceholder: "ಬೆಳೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                date: "ಬಿತ್ತನೆ ದಿನಾಂಕ:",
+                stage: "ಬೆಳವಣಿಗೆಯ ಹಂತ:",
+                selectStage: "ಹಂತವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                seedling: "ಸಸಿ ಹಂತ",
+                vegetative: "ಸಸ್ಯ ಬೆಳವಣಿಗೆಯ ಹಂತ",
+                flowering: "ಹೂ ಬಿಡುವ ಹಂತ",
+                fruiting: "ಹಣ್ಣು ಬಿಡುವ ಹಂತ",
+                maturity: "ಪಕ್ವತೆಯ ಹಂತ",
+                height: "ಸಸ್ಯದ ಎತ್ತರ (ಸೆಂ.ಮೀ.):",
+                heightPlaceholder: "ಸಸ್ಯದ ಎತ್ತರವನ್ನು ನಮೂದಿಸಿ",
+                moisture: "ಮಣ್ಣಿನ ತೇವಾಂಶ (%):",
+                moisturePlaceholder: "ಮಣ್ಣಿನ ತೇವಾಂಶವನ್ನು ನಮೂದಿಸಿ",
+                notes: "ಹೆಚ್ಚುವರಿ ಟಿಪ್ಪಣಿಗಳು:",
+                notesPlaceholder: "ಹೆಚ್ಚುವರಿ ಮಾಹಿತಿಯನ್ನು ನಮೂದಿಸಿ",
+                save: "ಪ್ರಗತಿಯನ್ನು ಉಳಿಸಿ",
+                back: "← ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹಿಂತಿರುಗಿ"
+            }
+        };
+
+        function changeLanguage() {
+
+            const lang = document.getElementById("languageSelect").value;
+
+            localStorage.setItem("farmLanguage", lang);
+
+            document.querySelectorAll("[data-key]").forEach(element => {
+                const key = element.getAttribute("data-key");
+                element.textContent = progressTranslations[lang][key];
+            });
+
+            document.querySelectorAll("[data-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-placeholder");
+                element.placeholder = progressTranslations[lang][key];
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+
+            const savedLanguage = localStorage.getItem("farmLanguage") || "en";
+
+            document.getElementById("languageSelect").value = savedLanguage;
+
+            changeLanguage();
+
+        });
+    </script>
+
+</body>
+</html>

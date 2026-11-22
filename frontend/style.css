@@ -1,0 +1,514 @@
+/* BASIC SETTINGS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f9f3;
+    color: #263b2a;
+    line-height: 1.6;
+}
+
+/* NAVIGATION BAR */
+
+header {
+    background-color: #176b35;
+    color: white;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h2 {
+    font-size: 25px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #b8f5a9;
+}
+
+/* HERO SECTION */
+
+.hero {
+    background: linear-gradient(135deg, #d9efd5, #a8d5a2);
+    text-align: center;
+    padding: 90px 20px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    color: #14552b;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 650px;
+    margin: 0 auto 25px;
+}
+
+/* BUTTON */
+
+button {
+    background-color: #176b35;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0e4b24;
+}
+
+/* FEATURES SECTION */
+
+.features {
+    text-align: center;
+    padding: 55px 20px;
+}
+
+.features h2 {
+    color: #176b35;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+.card {
+    background-color: white;
+    width: 230px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    color: #176b35;
+    margin-bottom: 12px;
+}
+
+/* ABOUT SECTION */
+
+.about {
+    background-color: #e5f1e3;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+.about h2 {
+    color: #176b35;
+    margin-bottom: 15px;
+}
+
+.about p {
+    max-width: 700px;
+    margin: auto;
+}
+
+/* FOOTER */
+
+footer {
+    background-color: #124d29;
+    color: white;
+    text-align: center;
+    padding: 18px;
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+/* FARMER DASHBOARD */
+
+.dashboard {
+    padding: 45px 6%;
+    text-align: center;
+}
+
+.dashboard h1 {
+    color: #176b35;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.dashboard-card h2 {
+    color: #176b35;
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.dashboard-card p {
+    margin-bottom: 18px;
+}
+
+.dashboard-card a {
+    display: inline-block;
+    background: #176b35;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.dashboard-card a:hover {
+    background: #0e4b24;
+}
+
+@media (max-width: 700px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* SOIL ANALYSIS PAGE */
+
+#soilForm {
+    background: white;
+    max-width: 500px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+#soilForm h2 {
+    text-align: center;
+    color: #176b35;
+}
+
+#soilForm label {
+    display: block;
+    color: #176b35;
+    font-weight: bold;
+}
+
+#soilForm input,
+#soilForm select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+#soilResult {
+    max-width: 500px;
+    margin: 25px auto;
+    padding: 20px;
+    background: #e5f1e3;
+    border-radius: 10px;
+    text-align: left;
+}
+
+#soilResult:empty {
+    display: none;
+}
+
+/* WEATHER FORECAST PAGE */
+
+.weather-section {
+    padding: 40px 6%;
+    text-align: center;
+}
+
+#weatherForm {
+    background: white;
+    max-width: 450px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#weatherForm label {
+    display: block;
+    color: #176b35;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+#weatherForm input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 18px;
+}
+
+#weatherResult {
+    margin-top: 30px;
+}
+
+.weather-current {
+    background: #e5f1e3;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.forecast-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.forecast-card {
+    background: white;
+    padding: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.forecast-card h3 {
+    color: #176b35;
+}
+
+.weather-section button {
+    margin-top: 15px;
+}
+
+@media(max-width: 700px) {
+    .forecast-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* IRRIGATION PLANNER */
+
+#irrigationForm {
+    background: white;
+    max-width: 500px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+#irrigationForm h2 {
+    text-align: center;
+    color: #176b35;
+}
+
+#irrigationForm label {
+    display: block;
+    color: #176b35;
+    font-weight: bold;
+}
+
+#irrigationForm input,
+#irrigationForm select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+#irrigationResult {
+    max-width: 500px;
+    margin: 25px auto;
+    padding: 22px;
+    background: #e5f1e3;
+    border-radius: 12px;
+    text-align: left;
+}
+
+#irrigationResult:empty {
+    display: none;
+}
+
+/* CROP HEALTH PAGE */
+
+#cropHealthForm {
+    background: white;
+    max-width: 500px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+#cropHealthForm h2 {
+    text-align: center;
+    color: #176b35;
+}
+
+#cropHealthForm label {
+    display: block;
+    color: #176b35;
+    font-weight: bold;
+}
+
+#cropHealthForm input,
+#cropHealthForm select,
+#cropHealthForm textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-family: Arial, sans-serif;
+}
+
+#cropHealthResult {
+    max-width: 500px;
+    margin: 25px auto;
+    padding: 22px;
+    background: #e5f1e3;
+    border-radius: 12px;
+    text-align: left;
+}
+
+#cropHealthResult:empty {
+    display: none;
+}
+/* EXTRA MOBILE RESPONSIVENESS */
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+nav {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#soilForm,
+#weatherForm,
+#irrigationForm,
+#cropHealthForm {
+    width: 90%;
+}
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 15px;
+        text-align: center;
+    }
+
+    header h2 {
+        font-size: 21px;
+    }
+
+    nav {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    .hero {
+        padding: 55px 15px;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .features h2 {
+        font-size: 25px;
+    }
+
+    .dashboard {
+        padding: 30px 15px;
+    }
+
+    .dashboard h1 {
+        font-size: 26px;
+    }
+
+    #soilForm,
+    #weatherForm,
+    #irrigationForm,
+    #cropHealthForm {
+        width: 92%;
+        padding: 20px;
+    }
+
+    button {
+        max-width: 100%;
+    }
+
+    .forecast-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    footer {
+        font-size: 14px;
+    }
+}

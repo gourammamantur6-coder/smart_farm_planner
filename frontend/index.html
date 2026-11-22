@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ಸ್ಮಾರ್ಟ್ ಕೃಷಿ ಯೋಜಕ</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+            text-align: center;
+        }
+
+        header {
+            background: #155b36;
+            color: white;
+            padding: 18px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .container {
+            margin: 80px auto;
+            padding: 25px;
+        }
+
+        button {
+            background: #16836b;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        #customAlert {
+            display: none;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            width: 280px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px #777;
+            z-index: 9999;
+        }
+
+        #customAlert h3 {
+            color: #155b36;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    ಸ್ಮಾರ್ಟ್ ಕೃಷಿ ಯೋಜಕ
+</header>
+
+<div class="container">
+    <h1>ಸ್ಮಾರ್ಟ್ ಕೃಷಿಗೆ ಸ್ವಾಗತ</h1>
+
+    <p>ನಿಮ್ಮ ಕೃಷಿಯನ್ನು ತಂತ್ರಜ್ಞಾನದ ಮೂಲಕ ಸುಧಾರಿಸಿ.</p>
+
+    <button onclick="showAlert('ನಿಮ್ಮ ಯೋಜನೆ ಯಶಸ್ವಿಯಾಗಿ ಪ್ರಾರಂಭವಾಗಿದೆ!')">
+        ಪ್ರಾರಂಭಿಸಿ
+    </button>
+</div>
+
+<div id="customAlert">
+    <h3>ಸಂದೇಶ</h3>
+    <p id="alertMessage"></p>
+    <button onclick="closeAlert()">ಸರಿ</button>
+</div>
+
+<script>
+function showAlert(message) {
+    document.getElementById("alertMessage").innerText = message;
+    document.getElementById("customAlert").style.display = "block";
+}
+
+function closeAlert() {
+    document.getElementById("customAlert").style.display = "none";
+}
+</script>
+
+</body>
+</html>

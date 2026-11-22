@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2>🌱 Smart Farm Planner</h2>
+
+        <nav>
+            <a href="index.html" data-key="home">Home</a>
+            <a href="dashboard.html" data-key="dashboard">Dashboard</a>
+        </nav>
+
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="kn">ಕನ್ನಡ</option>
+        </select>
+    </header>
+
+    <section class="hero">
+
+        <h1 data-key="title">💧 Smart Irrigation Planner</h1>
+
+        <p data-key="description">
+            Get irrigation recommendations for your farm
+        </p>
+
+    </section>
+
+    <section class="features">
+
+        <form id="irrigationForm">
+
+            <h2 data-key="formTitle">Enter Farm Details</h2>
+
+            <br>
+
+            <label data-key="cropLabel">Crop Name</label>
+
+            <select id="crop" required>
+                <option value="" data-key="selectCrop">Select Crop</option>
+                <option value="Rice" data-key="rice">Rice</option>
+                <option value="Wheat" data-key="wheat">Wheat</option>
+                <option value="Maize" data-key="maize">Maize</option>
+                <option value="Tomato" data-key="tomato">Tomato</option>
+                <option value="Sugarcane" data-key="sugarcane">Sugarcane</option>
+                <option value="Ragi" data-key="ragi">Ragi</option>
+                <option value="Groundnut" data-key="groundnut">Groundnut</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="soilLabel">Soil Type</label>
+
+            <select id="irrigationSoil" required>
+                <option value="" data-key="selectSoil">Select Soil</option>
+                <option value="Red Soil" data-key="red">Red Soil</option>
+                <option value="Black Soil" data-key="black">Black Soil</option>
+                <option value="Clay Soil" data-key="clay">Clay Soil</option>
+                <option value="Sandy Soil" data-key="sandy">Sandy Soil</option>
+                <option value="Loamy Soil" data-key="loamy">Loamy Soil</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="moistureLabel">Soil Moisture (%)</label>
+
+            <input type="number" id="irrigationMoisture"
+                min="0" max="100" required
+                data-placeholder="moisturePlaceholder"
+                placeholder="Enter moisture percentage">
+
+            <br><br>
+
+            <label data-key="rainfallLabel">Rainfall Probability (%)</label>
+
+            <input type="number" id="rainfall"
+                min="0" max="100" required
+                data-placeholder="rainfallPlaceholder"
+                placeholder="Enter rainfall probability">
+
+            <br><br>
+
+            <label data-key="temperatureLabel">Temperature (°C)</label>
+
+            <input type="number" id="temperature"
+                min="-10" max="60" step="0.1"
+                required
+                data-placeholder="temperaturePlaceholder"
+                placeholder="Enter temperature">
+
+            <br><br>
+
+            <button type="submit" data-key="generate">
+                Generate Irrigation Plan
+            </button>
+
+        </form>
+
+        <div id="irrigationResult"></div>
+
+        <br>
+
+        <a href="dashboard.html" data-key="back">
+            ← Back to Dashboard
+        </a>
+
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        const irrigationTranslations = {
+
+            en: {
+                home: "Home",
+                dashboard: "Dashboard",
+                title: "💧 Smart Irrigation Planner",
+                description: "Get irrigation recommendations for your farm",
+                formTitle: "Enter Farm Details",
+                cropLabel: "Crop Name",
+                selectCrop: "Select Crop",
+                rice: "Rice",
+                wheat: "Wheat",
+                maize: "Maize",
+                tomato: "Tomato",
+                sugarcane: "Sugarcane",
+                ragi: "Ragi",
+                groundnut: "Groundnut",
+                soilLabel: "Soil Type",
+                selectSoil: "Select Soil",
+                red: "Red Soil",
+                black: "Black Soil",
+                clay: "Clay Soil",
+                sandy: "Sandy Soil",
+                loamy: "Loamy Soil",
+                moistureLabel: "Soil Moisture (%)",
+                moisturePlaceholder: "Enter moisture percentage",
+                rainfallLabel: "Rainfall Probability (%)",
+                rainfallPlaceholder: "Enter rainfall probability",
+                temperatureLabel: "Temperature (°C)",
+                temperaturePlaceholder: "Enter temperature",
+                generate: "Generate Irrigation Plan",
+                back: "← Back to Dashboard"
+            },
+
+            kn: {
+                home: "ಮುಖಪುಟ",
+                dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+                title: "💧 ಸ್ಮಾರ್ಟ್ ನೀರಾವರಿ ಯೋಜಕ",
+                description: "ನಿಮ್ಮ ಕೃಷಿಗೆ ನೀರಾವರಿ ಸಲಹೆಗಳನ್ನು ಪಡೆಯಿರಿ",
+                formTitle: "ಕೃಷಿ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ",
+                cropLabel: "ಬೆಳೆಯ ಹೆಸರು",
+                selectCrop: "ಬೆಳೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                rice: "ಭತ್ತ",
+                wheat: "ಗೋಧಿ",
+                maize: "ಮೆಕ್ಕೆಜೋಳ",
+                tomato: "ಟೊಮೆಟೊ",
+                sugarcane: "ಕಬ್ಬು",
+                ragi: "ರಾಗಿ",
+                groundnut: "ಕಡಲೆಕಾಯಿ",
+                soilLabel: "ಮಣ್ಣಿನ ವಿಧ",
+                selectSoil: "ಮಣ್ಣನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                red: "ಕೆಂಪು ಮಣ್ಣು",
+                black: "ಕಪ್ಪು ಮಣ್ಣು",
+                clay: "ಜೇಡಿ ಮಣ್ಣು",
+                sandy: "ಮರಳು ಮಣ್ಣು",
+                loamy: "ಲೋಮಿ ಮಣ್ಣು",
+                moistureLabel: "ಮಣ್ಣಿನ ತೇವಾಂಶ (%)",
+                moisturePlaceholder: "ತೇವಾಂಶದ ಪ್ರಮಾಣವನ್ನು ನಮೂದಿಸಿ",
+                rainfallLabel: "ಮಳೆಯ ಸಂಭವನೀಯತೆ (%)",
+                rainfallPlaceholder: "ಮಳೆಯ ಸಂಭವನೀಯತೆಯನ್ನು ನಮೂದಿಸಿ",
+                temperatureLabel: "ತಾಪಮಾನ (°C)",
+                temperaturePlaceholder: "ತಾಪಮಾನವನ್ನು ನಮೂದಿಸಿ",
+                generate: "ನೀರಾವರಿ ಯೋಜನೆಯನ್ನು ರಚಿಸಿ",
+                back: "← ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹಿಂತಿರುಗಿ"
+            }
+        };
+
+        function changeLanguage() {
+
+            const lang = document.getElementById("languageSelect").value;
+
+            localStorage.setItem("farmLanguage", lang);
+
+            document.querySelectorAll("[data-key]").forEach(element => {
+                const key = element.getAttribute("data-key");
+                element.textContent = irrigationTranslations[lang][key];
+            });
+
+            document.querySelectorAll("[data-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-placeholder");
+                element.placeholder = irrigationTranslations[lang][key];
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+
+            const savedLanguage = localStorage.getItem("farmLanguage") || "en";
+
+            document.getElementById("languageSelect").value = savedLanguage;
+
+            changeLanguage();
+
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2>🌱 Smart Farm Planner</h2>
+    </header>
+
+    <section class="hero">
+        <h1 data-translate="regTitle">Farmer Registration</h1>
+        <p data-translate="regDesc">Enter your farming details</p>
+    </section>
+
+    <section class="features">
+
+        <form id="farmerForm">
+
+            <label data-translate="farmerName">Farmer Name</label>
+            <input type="text" id="name"
+                data-translate-placeholder="namePlaceholder"
+                placeholder="Enter your name" required>
+
+            <br><br>
+
+            <label data-translate="mobile">Mobile Number</label>
+            <input type="tel" id="mobile"
+                data-translate-placeholder="mobilePlaceholder"
+                placeholder="Enter mobile number" required>
+
+            <br><br>
+
+            <label data-translate="village">Village</label>
+            <input type="text" id="village"
+                data-translate-placeholder="villagePlaceholder"
+                placeholder="Enter village" required>
+
+            <br><br>
+
+            <label data-translate="farmArea">Farm Area (acres)</label>
+            <input type="number" id="area"
+                data-translate-placeholder="areaPlaceholder"
+                placeholder="Enter farm area"
+                min="0.01" required>
+
+            <br><br>
+
+            <label data-translate="language">Language</label>
+
+            <select id="languageSelect" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="kn">ಕನ್ನಡ</option>
+            </select>
+
+            <br><br>
+
+            <button type="submit" data-translate="registerBtn">
+                Register
+            </button>
+
+        </form>
+
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        const registerTranslations = {
+            en: {
+                regTitle: "Farmer Registration",
+                regDesc: "Enter your farming details",
+                farmerName: "Farmer Name",
+                namePlaceholder: "Enter your name",
+                mobile: "Mobile Number",
+                mobilePlaceholder: "Enter mobile number",
+                village: "Village",
+                villagePlaceholder: "Enter village",
+                farmArea: "Farm Area (acres)",
+                areaPlaceholder: "Enter farm area",
+                language: "Language",
+                registerBtn: "Register"
+            },
+
+            kn: {
+                regTitle: "ರೈತರ ನೋಂದಣಿ",
+                regDesc: "ನಿಮ್ಮ ಕೃಷಿ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ",
+                farmerName: "ರೈತರ ಹೆಸರು",
+                namePlaceholder: "ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                mobile: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+                mobilePlaceholder: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+                village: "ಗ್ರಾಮ",
+                villagePlaceholder: "ಗ್ರಾಮದ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                farmArea: "ಕೃಷಿ ಭೂಮಿಯ ವಿಸ್ತೀರ್ಣ (ಎಕರೆ)",
+                areaPlaceholder: "ಕೃಷಿ ಭೂಮಿಯ ವಿಸ್ತೀರ್ಣ ನಮೂದಿಸಿ",
+                language: "ಭಾಷೆ",
+                registerBtn: "ನೋಂದಣಿ ಮಾಡಿ"
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById("languageSelect").value;
+
+            localStorage.setItem("farmLanguage", lang);
+
+            document.querySelectorAll("[data-translate]").forEach(element => {
+                const key = element.getAttribute("data-translate");
+                if (registerTranslations[lang][key]) {
+                    element.textContent = registerTranslations[lang][key];
+                }
+            });
+
+            document.querySelectorAll("[data-translate-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-translate-placeholder");
+                if (registerTranslations[lang][key]) {
+                    element.placeholder = registerTranslations[lang][key];
+                }
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+            const savedLanguage = localStorage.getItem("farmLanguage") || "en";
+            document.getElementById("languageSelect").value = savedLanguage;
+            changeLanguage();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Health - Smart Farm Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2>🌱 Smart Farm Planner</h2>
+
+        <nav>
+            <a href="index.html" data-key="home">Home</a>
+            <a href="dashboard.html" data-key="dashboard">Dashboard</a>
+        </nav>
+
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="kn">ಕನ್ನಡ</option>
+        </select>
+    </header>
+
+    <section class="hero">
+
+        <h1 data-key="title">🌿 Crop Health Monitoring</h1>
+
+        <p data-key="subtitle">Monitor your crop condition and growth</p>
+
+    </section>
+
+    <section class="features">
+
+        <form id="cropHealthForm">
+
+            <h2 data-key="formTitle">Enter Crop Information</h2>
+
+            <br>
+
+            <label data-key="farmer">Farmer Name</label>
+
+            <input type="text" id="cropFarmer"
+                data-placeholder="farmerPlaceholder"
+                placeholder="Enter farmer name" required>
+
+            <br><br>
+
+            <label data-key="crop">Crop Name</label>
+
+            <select id="cropName" required>
+                <option value="" data-key="selectCrop">Select Crop</option>
+                <option value="Rice" data-key="rice">Rice</option>
+                <option value="Wheat" data-key="wheat">Wheat</option>
+                <option value="Maize" data-key="maize">Maize</option>
+                <option value="Tomato" data-key="tomato">Tomato</option>
+                <option value="Ragi" data-key="ragi">Ragi</option>
+                <option value="Sugarcane" data-key="sugarcane">Sugarcane</option>
+                <option value="Groundnut" data-key="groundnut">Groundnut</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="stage">Crop Growth Stage</label>
+
+            <select id="growthStage" required>
+                <option value="" data-key="selectStage">Select Stage</option>
+                <option value="Seedling" data-key="seedling">Seedling</option>
+                <option value="Vegetative" data-key="vegetative">Vegetative</option>
+                <option value="Flowering" data-key="flowering">Flowering</option>
+                <option value="Fruiting" data-key="fruiting">Fruiting</option>
+                <option value="Maturity" data-key="maturity">Maturity</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="leaf">Leaf Condition</label>
+
+            <select id="leafCondition" required>
+                <option value="" data-key="selectCondition">Select Condition</option>
+                <option value="Green and Healthy" data-key="green">Green and Healthy</option>
+                <option value="Yellow Leaves" data-key="yellow">Yellow Leaves</option>
+                <option value="Brown Spots" data-key="brown">Brown Spots</option>
+                <option value="Wilting" data-key="wilting">Wilting</option>
+                <option value="Curled Leaves" data-key="curled">Curled Leaves</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="symptoms">Observed Symptoms</label>
+
+            <textarea id="symptoms"
+                data-placeholder="symptomsPlaceholder"
+                placeholder="Describe any crop problems..."
+                rows="4"></textarea>
+
+            <br><br>
+
+            <label data-key="height">Crop Height (cm)</label>
+
+            <input type="number" id="cropHeight"
+                min="0" step="0.1"
+                data-placeholder="heightPlaceholder"
+                placeholder="Enter crop height" required>
+
+            <br><br>
+
+            <button type="submit" data-key="check">
+                Check Crop Health
+            </button>
+
+        </form>
+
+        <div id="cropHealthResult"></div>
+
+        <br>
+
+        <a href="dashboard.html" data-key="back">← Back to Dashboard</a>
+
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        const cropTranslations = {
+            en: {
+                home: "Home",
+                dashboard: "Dashboard",
+                title: "🌿 Crop Health Monitoring",
+                subtitle: "Monitor your crop condition and growth",
+                formTitle: "Enter Crop Information",
+                farmer: "Farmer Name",
+                farmerPlaceholder: "Enter farmer name",
+                crop: "Crop Name",
+                selectCrop: "Select Crop",
+                rice: "Rice",
+                wheat: "Wheat",
+                maize: "Maize",
+                tomato: "Tomato",
+                ragi: "Ragi",
+                sugarcane: "Sugarcane",
+                groundnut: "Groundnut",
+                stage: "Crop Growth Stage",
+                selectStage: "Select Stage",
+                seedling: "Seedling",
+                vegetative: "Vegetative",
+                flowering: "Flowering",
+                fruiting: "Fruiting",
+                maturity: "Maturity",
+                leaf: "Leaf Condition",
+                selectCondition: "Select Condition",
+                green: "Green and Healthy",
+                yellow: "Yellow Leaves",
+                brown: "Brown Spots",
+                wilting: "Wilting",
+                curled: "Curled Leaves",
+                symptoms: "Observed Symptoms",
+                symptomsPlaceholder: "Describe any crop problems...",
+                height: "Crop Height (cm)",
+                heightPlaceholder: "Enter crop height",
+                check: "Check Crop Health",
+                back: "← Back to Dashboard"
+            },
+
+            kn: {
+                home: "ಮುಖಪುಟ",
+                dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+                title: "🌿 ಬೆಳೆ ಆರೋಗ್ಯ ಮೇಲ್ವಿಚಾರಣೆ",
+                subtitle: "ನಿಮ್ಮ ಬೆಳೆಯ ಸ್ಥಿತಿ ಮತ್ತು ಬೆಳವಣಿಗೆಯನ್ನು ಗಮನಿಸಿ",
+                formTitle: "ಬೆಳೆಯ ಮಾಹಿತಿಯನ್ನು ನಮೂದಿಸಿ",
+                farmer: "ರೈತರ ಹೆಸರು",
+                farmerPlaceholder: "ರೈತರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                crop: "ಬೆಳೆಯ ಹೆಸರು",
+                selectCrop: "ಬೆಳೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                rice: "ಭತ್ತ",
+                wheat: "ಗೋಧಿ",
+                maize: "ಮೆಕ್ಕೆಜೋಳ",
+                tomato: "ಟೊಮೆಟೊ",
+                ragi: "ರಾಗಿ",
+                sugarcane: "ಕಬ್ಬು",
+                groundnut: "ಕಡಲೆಕಾಯಿ",
+                stage: "ಬೆಳೆಯ ಬೆಳವಣಿಗೆಯ ಹಂತ",
+                selectStage: "ಹಂತವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                seedling: "ಸಸಿ ಹಂತ",
+                vegetative: "ಸಸ್ಯ ಬೆಳವಣಿಗೆಯ ಹಂತ",
+                flowering: "ಹೂ ಬಿಡುವ ಹಂತ",
+                fruiting: "ಹಣ್ಣು ಬಿಡುವ ಹಂತ",
+                maturity: "ಪಕ್ವತೆಯ ಹಂತ",
+                leaf: "ಎಲೆಗಳ ಸ್ಥಿತಿ",
+                selectCondition: "ಸ್ಥಿತಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                green: "ಹಸಿರು ಮತ್ತು ಆರೋಗ್ಯಕರ",
+                yellow: "ಹಳದಿ ಎಲೆಗಳು",
+                brown: "ಕಂದು ಬಣ್ಣದ ಕಲೆಗಳು",
+                wilting: "ಬಾಡುತ್ತಿರುವ ಎಲೆಗಳು",
+                curled: "ಸುರುಳಿಯಾದ ಎಲೆಗಳು",
+                symptoms: "ಕಂಡುಬಂದ ಲಕ್ಷಣಗಳು",
+                symptomsPlaceholder: "ಬೆಳೆಯ ಸಮಸ್ಯೆಗಳನ್ನು ವಿವರಿಸಿ...",
+                height: "ಬೆಳೆಯ ಎತ್ತರ (ಸೆಂ.ಮೀ.)",
+                heightPlaceholder: "ಬೆಳೆಯ ಎತ್ತರವನ್ನು ನಮೂದಿಸಿ",
+                check: "ಬೆಳೆಯ ಆರೋಗ್ಯ ಪರಿಶೀಲಿಸಿ",
+                back: "← ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹಿಂತಿರುಗಿ"
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById("languageSelect").value;
+
+            localStorage.setItem("farmLanguage", lang);
+
+            document.querySelectorAll("[data-key]").forEach(element => {
+                const key = element.getAttribute("data-key");
+                element.textContent = cropTranslations[lang][key];
+            });
+
+            document.querySelectorAll("[data-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-placeholder");
+                element.placeholder = cropTranslations[lang][key];
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+            const savedLanguage = localStorage.getItem("farmLanguage") || "en";
+            document.getElementById("languageSelect").value = savedLanguage;
+            changeLanguage();
+        });
+    </script>
+
+</body>
+</html>

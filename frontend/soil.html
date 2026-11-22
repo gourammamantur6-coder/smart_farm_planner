@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Analysis - Smart Farm Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2>🌱 Smart Farm Planner</h2>
+
+        <nav>
+            <a href="index.html" data-key="home">Home</a>
+            <a href="dashboard.html" data-key="dashboard">Dashboard</a>
+        </nav>
+
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="kn">ಕನ್ನಡ</option>
+        </select>
+    </header>
+
+    <section class="hero">
+
+        <h1 data-key="title">🌱 Soil Analysis</h1>
+
+        <p data-key="description">Understand your farm soil condition</p>
+
+    </section>
+
+    <section class="features">
+
+        <form id="soilForm">
+
+            <h2 data-key="formTitle">Enter Soil Information</h2>
+
+            <br>
+
+            <label data-key="farmer">Farmer Name</label>
+
+            <input type="text" id="farmerName"
+                data-placeholder="farmerPlaceholder"
+                placeholder="Enter farmer name" required>
+
+            <br><br>
+
+            <label data-key="soil">Soil Type</label>
+
+            <select id="soilType" required>
+                <option value="" data-key="selectSoil">Select Soil Type</option>
+                <option value="Red Soil" data-key="red">Red Soil</option>
+                <option value="Black Soil" data-key="black">Black Soil</option>
+                <option value="Clay Soil" data-key="clay">Clay Soil</option>
+                <option value="Sandy Soil" data-key="sandy">Sandy Soil</option>
+                <option value="Loamy Soil" data-key="loamy">Loamy Soil</option>
+            </select>
+
+            <br><br>
+
+            <label data-key="ph">Soil pH (0–14)</label>
+
+            <input type="number" id="ph"
+                min="0" max="14" step="0.1"
+                data-placeholder="phPlaceholder"
+                placeholder="Example: 6.5" required>
+
+            <br><br>
+
+            <label data-key="moisture">Soil Moisture (%)</label>
+
+            <input type="number" id="moisture"
+                min="0" max="100"
+                data-placeholder="moisturePlaceholder"
+                placeholder="Example: 45" required>
+
+            <br><br>
+
+            <label data-key="nitrogen">Nitrogen (N) - mg/kg</label>
+
+            <input type="number" id="nitrogen"
+                min="0" step="0.1"
+                data-placeholder="nitrogenPlaceholder"
+                placeholder="Enter nitrogen value" required>
+
+            <br><br>
+
+            <label data-key="phosphorus">Phosphorus (P) - mg/kg</label>
+
+            <input type="number" id="phosphorus"
+                min="0" step="0.1"
+                data-placeholder="phosphorusPlaceholder"
+                placeholder="Enter phosphorus value" required>
+
+            <br><br>
+
+            <label data-key="potassium">Potassium (K) - mg/kg</label>
+
+            <input type="number" id="potassium"
+                min="0" step="0.1"
+                data-placeholder="potassiumPlaceholder"
+                placeholder="Enter potassium value" required>
+
+            <br><br>
+
+            <button type="submit" data-key="analyse">
+                Analyse Soil
+            </button>
+
+        </form>
+
+        <div id="soilResult"></div>
+
+        <br>
+
+        <a href="dashboard.html" data-key="back">
+            ← Back to Dashboard
+        </a>
+
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        const soilTranslations = {
+
+            en: {
+                home: "Home",
+                dashboard: "Dashboard",
+                title: "🌱 Soil Analysis",
+                description: "Understand your farm soil condition",
+                formTitle: "Enter Soil Information",
+                farmer: "Farmer Name",
+                farmerPlaceholder: "Enter farmer name",
+                soil: "Soil Type",
+                selectSoil: "Select Soil Type",
+                red: "Red Soil",
+                black: "Black Soil",
+                clay: "Clay Soil",
+                sandy: "Sandy Soil",
+                loamy: "Loamy Soil",
+                ph: "Soil pH (0–14)",
+                phPlaceholder: "Example: 6.5",
+                moisture: "Soil Moisture (%)",
+                moisturePlaceholder: "Example: 45",
+                nitrogen: "Nitrogen (N) - mg/kg",
+                nitrogenPlaceholder: "Enter nitrogen value",
+                phosphorus: "Phosphorus (P) - mg/kg",
+                phosphorusPlaceholder: "Enter phosphorus value",
+                potassium: "Potassium (K) - mg/kg",
+                potassiumPlaceholder: "Enter potassium value",
+                analyse: "Analyse Soil",
+                back: "← Back to Dashboard"
+            },
+
+            kn: {
+                home: "ಮುಖಪುಟ",
+                dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+                title: "🌱 ಮಣ್ಣಿನ ವಿಶ್ಲೇಷಣೆ",
+                description: "ನಿಮ್ಮ ಕೃಷಿ ಭೂಮಿಯ ಮಣ್ಣಿನ ಸ್ಥಿತಿಯನ್ನು ತಿಳಿಯಿರಿ",
+                formTitle: "ಮಣ್ಣಿನ ಮಾಹಿತಿಯನ್ನು ನಮೂದಿಸಿ",
+                farmer: "ರೈತರ ಹೆಸರು",
+                farmerPlaceholder: "ರೈತರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+                soil: "ಮಣ್ಣಿನ ವಿಧ",
+                selectSoil: "ಮಣ್ಣಿನ ವಿಧವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                red: "ಕೆಂಪು ಮಣ್ಣು",
+                black: "ಕಪ್ಪು ಮಣ್ಣು",
+                clay: "ಜೇಡಿ ಮಣ್ಣು",
+                sandy: "ಮರಳು ಮಣ್ಣು",
+                loamy: "ಲೋಮಿ ಮಣ್ಣು",
+                ph: "ಮಣ್ಣಿನ pH (0–14)",
+                phPlaceholder: "ಉದಾಹರಣೆ: 6.5",
+                moisture: "ಮಣ್ಣಿನ ತೇವಾಂಶ (%)",
+                moisturePlaceholder: "ಉದಾಹರಣೆ: 45",
+                nitrogen: "ಸಾರಜನಕ (N) - mg/kg",
+                nitrogenPlaceholder: "ಸಾರಜನಕದ ಮೌಲ್ಯವನ್ನು ನಮೂದಿಸಿ",
+                phosphorus: "ರಂಜಕ (P) - mg/kg",
+                phosphorusPlaceholder: "ರಂಜಕದ ಮೌಲ್ಯವನ್ನು ನಮೂದಿಸಿ",
+                potassium: "ಪೊಟ್ಯಾಸಿಯಮ್ (K) - mg/kg",
+                potassiumPlaceholder: "ಪೊಟ್ಯಾಸಿಯಮ್ ಮೌಲ್ಯವನ್ನು ನಮೂದಿಸಿ",
+                analyse: "ಮಣ್ಣನ್ನು ವಿಶ್ಲೇಷಿಸಿ",
+                back: "← ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹಿಂತಿರುಗಿ"
+            }
+        };
+
+        function changeLanguage() {
+
+            const lang = document.getElementById("languageSelect").value;
+
+            localStorage.setItem("farmLanguage", lang);
+
+            document.querySelectorAll("[data-key]").forEach(element => {
+                const key = element.getAttribute("data-key");
+                element.textContent = soilTranslations[lang][key];
+            });
+
+            document.querySelectorAll("[data-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-placeholder");
+                element.placeholder = soilTranslations[lang][key];
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+
+            const savedLanguage = localStorage.getItem("farmLanguage") || "en";
+
+            document.getElementById("languageSelect").value = savedLanguage;
+
+            changeLanguage();
+
+        });
+    </script>
+
+</body>
+</html>
