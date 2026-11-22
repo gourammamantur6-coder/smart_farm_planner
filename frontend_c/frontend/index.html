@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KrishiPlan – Farm Water & Risk Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1 id="t_app">KrishiPlan</h1>
+  <div class="bar">
+    <span id="net" class="badge on" role="status"></span>
+    <label class="bar" style="margin:0"><span id="t_lang" class="muted">Language</span>
+      <select id="lang" aria-label="Language"><option value="en">English</option><option value="kn">ಕನ್ನಡ</option><option value="hi">हिन्दी</option></select></label>
+    <label class="bar" style="margin:0"><span id="t_user" class="muted">Sign in as</span>
+      <select id="user" aria-label="User"></select></label>
+  </div>
+</header>
+
+<main>
+  <section class="card intro" aria-labelledby="t_prob">
+    <h2 id="t_prob"></h2>
+    <p id="t_probtxt" style="margin:0 0 6px"></p>
+    <p id="t_users" class="muted" style="margin:0"></p>
+  </section>
+
+  <div id="app" class="grid"></div>
+</main>
+<div id="toast" class="toast hidden" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
